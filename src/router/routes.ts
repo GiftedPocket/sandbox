@@ -1,14 +1,44 @@
 import type { RouteRecordRaw } from 'vue-router';
 
+import { ROUTE_HOME } from './routeNames';
+
+/** 後方互換用。いずれもリンク一覧へ。 */
+const LEGACY_REDIRECT_PATHS = [
+  'issues',
+  'dashboard',
+  'showcases',
+  'linked-demo',
+  'home',
+] as const satisfies readonly string[];
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [
+      { path: '', redirect: { name: ROUTE_HOME } },
+      {
+        path: ROUTE_HOME,
+        name: ROUTE_HOME,
+        component: () => import('pages/LinksPage.vue'),
+      },
+      {
+        path: 'hello',
+        name: 'hello',
+        meta: { navLink: true, navLabel: 'Hello（デモ）' },
+        component: () => import('pages/HelloPage.vue'),
+      },
+    {
+      path: 'yas-kuku',
+      name: 'yas-kuku',
+      meta: { navLink: true, navLabel: 'Yas Kuku' },
+      component: () => import('pages/kuku/YasKukuPage.vue'),
+    },
+      ...LEGACY_REDIRECT_PATHS.map(
+        (path): RouteRecordRaw => ({ path, redirect: { name: ROUTE_HOME } }),
+      ),
+    ],
   },
-
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

@@ -1,1 +1,222 @@
-// app global css
+@use './lite.scss';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  /* cyber / SF — 強めコントラスト */
+  --sf-void: #010204;
+  --sf-deep: #020713;
+  --sf-panel: #070e1a;
+  --sf-panel-2: #091223;
+  --sf-line: rgba(64, 252, 255, 0.55);
+  --sf-line-soft: rgba(64, 252, 255, 0.28);
+  --sf-cyan: #5dfffc;
+  --sf-cyan-dim: #2ee6e8;
+  --sf-magenta: #ff4adb;
+  --sf-violet: #ae7dff;
+  --sf-green: #5cffa6;
+  --sf-text: #f9feff;
+  --sf-muted: #aabfd6;
+}
+
+html,
+body,
+#q-app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+@keyframes sf-grid-drift {
+  0% {
+    background-position: 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: 0 0, 80px 80px, 0 240px;
+  }
+}
+
+@keyframes sf-accent-pulse {
+  0%,
+  100% {
+    opacity: 0.93;
+    filter: saturate(1.05);
+  }
+  50% {
+    opacity: 1;
+    filter: saturate(1.1);
+  }
+}
+
+body {
+  font-family:
+    'Noto Sans JP',
+    'Segoe UI',
+    system-ui,
+    sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--sf-text);
+  background-color: var(--sf-void);
+  background-image:
+    radial-gradient(ellipse 110% 80% at 50% -20%, rgba(0, 246, 255, 0.08), transparent 52%),
+    radial-gradient(ellipse 90% 60% at 100% 30%, rgba(174, 125, 255, 0.07), transparent 48%),
+    radial-gradient(ellipse 70% 50% at 0% 80%, rgba(255, 74, 219, 0.06), transparent 42%),
+    linear-gradient(var(--sf-void), var(--sf-deep));
+  background-attachment: fixed;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body {
+    animation: sf-accent-pulse 14s ease-in-out infinite;
+  }
+}
+
+/** 細いホログラフィック調グリッド（奥行き感） */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.24;
+  background-image:
+    linear-gradient(transparent 23px, rgba(93, 255, 252, 0.09) 24px),
+    linear-gradient(90deg, transparent 23px, rgba(174, 125, 255, 0.08) 24px),
+    linear-gradient(transparent calc(50% - 2px), rgba(93, 255, 252, 0.05) calc(50% - 2px)),
+    radial-gradient(circle at 50% 0%, rgba(93, 255, 252, 0.1), transparent 55%);
+  background-size:
+    100% 24px,
+    24px 100%,
+    100% 100%,
+    100% 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body::before {
+    animation: sf-grid-drift 48s linear infinite;
+  }
+}
+
+/** 走査線フィルター */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.045;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(0, 10, 20, 0.55) 2px,
+    rgba(0, 10, 20, 0.55) 4px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  body::before {
+    animation: none !important;
+  }
+
+  body::after {
+    opacity: 0.022;
+  }
+}
+
+#q-app {
+  position: relative;
+  z-index: 1;
+}
+
+a {
+  color: var(--sf-cyan);
+}
+
+a:visited {
+  color: var(--sf-cyan-dim);
+  filter: brightness(1.12);
+}
+
+.lite-muted {
+  color: var(--sf-muted);
+}
+
+.lite-error {
+  color: #ff7aa8;
+  font-weight: 600;
+}
+
+.lite-banner {
+  border: 1px solid var(--sf-line);
+  box-shadow:
+    0 0 26px rgba(93, 255, 252, 0.2),
+    inset 0 0 34px rgba(174, 125, 255, 0.08);
+  background: rgba(5, 9, 16, 0.94);
+  color: var(--sf-text);
+  padding: 10px 12px;
+  margin: 12px 0;
+}
+
+/** サイバールックの見出し（日本語でも読めるよう Noto メイン） */
+.sf-heading {
+  font-family:
+    Orbitron,
+    'Noto Sans JP',
+    sans-serif;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--sf-text);
+}
+
+.sf-heading-accent {
+  color: var(--sf-cyan);
+  text-shadow:
+    0 0 26px rgba(93, 255, 252, 0.75),
+    0 0 48px rgba(174, 125, 255, 0.35);
+}
+
+.sf-mono {
+  font-family: 'Share Tech Mono', ui-monospace, monospace;
+}
+
+@keyframes sf-sector-blink {
+  0%,
+  100% {
+    opacity: 0.55;
+    text-shadow: 0 0 8px color-mix(in srgb, var(--sf-magenta) 65%, transparent);
+  }
+  50% {
+    opacity: 1;
+    text-shadow:
+      0 0 20px color-mix(in srgb, var(--sf-magenta) 90%, transparent),
+      0 0 40px color-mix(in srgb, var(--sf-cyan) 45%, transparent);
+  }
+}
+
+.sf-sector-pulse {
+  margin: 0 0 8px;
+  font-size: 11px;
+  letter-spacing: 0.38em;
+  color: var(--sf-magenta);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sf-sector-pulse {
+    animation: sf-sector-blink 2.4s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sf-sector-pulse {
+    opacity: 0.92;
+    animation: none !important;
+  }
+}
+
