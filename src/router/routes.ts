@@ -28,12 +28,12 @@ const routes: RouteRecordRaw[] = [
         meta: { navLink: true, navLabel: 'Hello（デモ）' },
         component: () => import('pages/HelloPage.vue'),
       },
-    {
-      path: 'yas-kuku',
-      name: 'yas-kuku',
-      meta: { navLink: true, navLabel: 'Yas Kuku' },
-      component: () => import('pages/kuku/YasKukuPage.vue'),
-    },
+      {
+        path: 'yas-kuku',
+        name: 'yas-kuku',
+        meta: { navLink: true, navLabel: 'Yas Kuku' },
+        component: () => import('pages/kuku/YasKuKuPage.vue'),
+      },
       ...LEGACY_REDIRECT_PATHS.map(
         (path): RouteRecordRaw => ({ path, redirect: { name: ROUTE_HOME } }),
       ),
