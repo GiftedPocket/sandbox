@@ -1,14 +1,17 @@
 <template>
-    <table class="root">
-        <tr v-for="[doNumber, doneNumbers] in timesMap.entries()" :key="doNumber" :data-number=doNumber>
-            <th>
-                {{ doNumber }}のだん
-            </th>
-            <td v-for="done in doneNumbers" :key=done :data-step=doNumber :data-done-number=done>
-                <span>{{ doNumber * done }}</span>
-            </td>
-        </tr>
-    </table>
+    <div class="root">
+
+        <table>
+            <tr v-for="[doNumber, doneNumbers] in timesMap.entries()" :key="doNumber" :data-number=doNumber>
+                <th>
+                    {{ doNumber }}のだん
+                </th>
+                <td v-for="done in doneNumbers" :key=done :data-step=doNumber :data-done-number=done>
+                    <span>{{ doNumber * done }}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
 </template>
 <script setup lang="ts">
 
@@ -20,18 +23,49 @@ timesRecord.forEach(e => {
 
 </script>
 <style scoped>
-table {
-    width: 100%;
-    font-size: 2rem;
-    table-layout: fixed;
+.root {
     padding-right: 2rem;
     padding-left: 2rem;
     padding-top: 2rem;
     padding-bottom: 2rem;
+    font-size: 2rem;
+    overflow-x: auto;
+    --num-color-1: #FFB3B3;
+    --num-color-2: #FFD1B3;
+    --num-color-3: #FFFFB3;
+    --num-color-4: #D1FFB3;
+    --num-color-5: #B3FFB3;
+    --num-color-6: #B3FFFF;
+    --num-color-7: #B3D1FF;
+    --num-color-8: #C4B3FF;
+    --num-color-9: #FFB3FF;
+    --table-border: 0.1rem solid rgba(150, 150, 200, 0.1);
+}
+
+table {
+    width: 100%;
+    min-width: 41rem;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+tr {
+    border-bottom: var(--table-border);
+}
+
+tr:first-child {
+    border-top: var(--table-border);
+}
+
+th,
+td {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
 }
 
 th {
     width: 10rem;
+    text-wrap: nowrap;
 }
 
 td {
@@ -51,17 +85,6 @@ td:first-of-type::before {
     content: none;
 }
 
-.root {
-    --num-color-1: #FFB3B3;
-    --num-color-2: #FFD1B3;
-    --num-color-3: #FFFFB3;
-    --num-color-4: #D1FFB3;
-    --num-color-5: #B3FFB3;
-    --num-color-6: #B3FFFF;
-    --num-color-7: #B3D1FF;
-    --num-color-8: #C4B3FF;
-    --num-color-9: #FFB3FF;
-}
 
 td[data-done-number="1"]>span,
 tr[data-number="1"] {
