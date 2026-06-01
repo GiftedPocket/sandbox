@@ -34,6 +34,12 @@ const routes: RouteRecordRaw[] = [
         meta: { navLink: true, navLabel: 'Yas Kuku' },
         component: () => import('pages/kuku/YasKuKuPage.vue'),
       },
+      {
+        path: 'yamag-kuku',
+        name: 'yamag-kuku',
+        meta: { navLink: true, navLabel: 'Yamag Kuku' },
+        component: () => import('pages/kuku/YamagKuKuPage.vue'),
+      },
       ...LEGACY_REDIRECT_PATHS.map(
         (path): RouteRecordRaw => ({ path, redirect: { name: ROUTE_HOME } }),
       ),
